@@ -13,7 +13,7 @@ namespace Bezbeli\Nav\BS4NavWalker;
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-class bs4Navwalker extends Walker_Nav_Menu
+class BS4NavWalker extends Walker_Nav_Menu
 {
     /**
      * Starts the list before the elements are added.
