@@ -1,0 +1,19 @@
+{
+    "name": "bezbeli/navigation",
+    "description": "Bootstrap 4 Wordpress Nav Walker",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "bezbeli",
+            "email": "bezbeli@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Bezbeli\\Nav\\": "src"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
