@@ -4,10 +4,6 @@ namespace Bezbeli\Nav;
 
 class Pagination
 {
-    public function postsLinkAttributes()
-    {
-        return 'class="page-link"';
-    }
 
     /**
     * A pagination function
@@ -97,5 +93,3 @@ class Pagination
     }
 }
 
-add_filter('next_posts_link_attributes', __NAMESPACE__ . '\\postsLinkAttributes');
-add_filter('previous_posts_link_attributes', __NAMESPACE__ . '\\postsLinkAttributes');
