@@ -1,6 +1,6 @@
 <?php
 
-namespace Bezbeli\Pagination;
+namespace Bezbeli\Nav\Pagination;
 
 class Pagination
 {
@@ -8,7 +8,7 @@ class Pagination
     {
         return 'class="page-link"';
     }
-    
+
     /**
     * A pagination function
     * @param integer $range: The range of the slider, works best with even numbers
@@ -17,7 +17,7 @@ class Pagination
     * previous_posts_link(' « '); - returns the Previous page link
     * next_posts_link(' » '); - returns the Next page link
     */
-    
+
     public function show($range = 3)
     {
         // $paged - number of the current page
