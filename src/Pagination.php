@@ -1,6 +1,6 @@
 <?php
 
-namespace Bezbeli\Nav\Pagination;
+namespace Bezbeli\Nav;
 
 class Pagination
 {
@@ -18,7 +18,7 @@ class Pagination
     * next_posts_link(' » '); - returns the Next page link
     */
 
-    public function show($range = 3)
+    public function get($range = 3)
     {
         // $paged - number of the current page
         global $paged, $wp_query;
