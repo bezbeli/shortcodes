@@ -2,8 +2,18 @@
 
 namespace Bezbeli\Nav;
 
-class Pagination
+class Navigation
 {
+    public function __construct()
+    {
+        add_filter('next_posts_link_attributes', [$this, 'postsLinkAttributes']);
+        add_filter('previous_posts_link_attributes', [$this, 'postsLinkAttributes']);
+    }
+
+    public function postsLinkAttributes()
+    {
+        return 'class="page-link"';
+    }
 
     /**
     * A pagination function
@@ -92,4 +102,3 @@ class Pagination
         }
     }
 }
-
