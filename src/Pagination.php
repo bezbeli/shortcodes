@@ -2,7 +2,7 @@
 
 namespace Bezbeli\Nav;
 
-class Navigation
+class Pagination
 {
     public function __construct()
     {
