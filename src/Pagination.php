@@ -36,7 +36,7 @@ class Pagination
             if (!$paged) {
                 $paged = 1;
             }
-            echo '<ul class="pagination justify-content-centeri' . $size .'">';
+            echo '<ul class="pagination justify-content-center ' . $size .'">';
             // To the previous page
             if (get_previous_posts_link()) {
                 echo '<li class="page-item">';
