@@ -24,7 +24,7 @@ class Pagination
     * next_posts_link(' » '); - returns the Next page link
     */
 
-    public function get($range = 3)
+    public function get($range = 3, $size = '')
     {
         // $paged - number of the current page
         global $paged, $wp_query;
@@ -36,7 +36,7 @@ class Pagination
             if (!$paged) {
                 $paged = 1;
             }
-            echo '<ul class="pagination justify-content-center">';
+            echo '<ul class="pagination justify-content-centeri' . $size .'">';
             // To the previous page
             if (get_previous_posts_link()) {
                 echo '<li class="page-item">';
