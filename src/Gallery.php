@@ -1,5 +1,7 @@
 <?php
 
+// nova blueimp galerija
+
 namespace Bezbeli\Gallery;
 
 class Gallery
