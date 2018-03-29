@@ -1,6 +1,6 @@
 {
-    "name": "bezbeli/wp-navigation",
-    "description": "Bootstrap 4 Wordpress Nav Walker",
+    "name": "bezbeli/sage-gallery",
+    "description": "Custom gallery for Roots/Sage",
     "type": "package",
     "license": "MIT",
     "authors": [
@@ -11,7 +11,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Bezbeli\\Nav\\": "src"
+            "Bezbeli\\Gallery\\": "src"
         }
     },
     "minimum-stability": "stable",
