@@ -1,6 +1,6 @@
 <?php
 
-namespace Bezbeli\Gallery;
+namespace Bezbeli;
 
 class Gallery
 {
