@@ -21,15 +21,15 @@ class Gallery
         $link = '';
 
         $columns = (12 % $columns == 0) ? $columns : 3;
-        $grid = sprintf('col-sm-%1$s col-md-%1$s', 12/$columns);
+        $grid = sprintf('col-%1$s col-sm-%1$s col-md-%1$s', 12 / $columns);
 
         $attachments = get_children([
-                'post_parent' => $id,
-                'post_status' => 'inherit',
-                'post_type' => 'attachment',
-                'post_mime_type' => 'image',
-                'orderby' => $orderby,
-                'order' => $order,
+                'post_parent'       => $id,
+                'post_status'       => 'inherit',
+                'post_type'         => 'attachment',
+                'post_mime_type'    => 'image',
+                'orderby'           => $orderby,
+                'order'             => $order,
             ]);
 
         if (empty($attachments)) {
@@ -47,16 +47,13 @@ class Gallery
 
         // if ($unique == 1) {
         $output .= '
-                    <div id="blueimp-gallery-' . $instance . '" class="blueimp-gallery" data-use-bootstrap-modal="false">
-                        <!-- The container for the modal slides -->
+                    <div id="blueimp-gallery" class="blueimp-gallery" data-use-bootstrap-modal="false">
                         <div class="slides"></div>
-                        <!-- Controls for the borderless lightbox -->
                         <h3 class="title"></h3>
                         <a class="prev">‹</a>
                         <a class="next">›</a>
                         <a class="close">×</a>
                         <a class="play-pause"></a>
-                        <!-- The modal dialog, which will be used to wrap the lightbox content -->
                         <div class="modal fade">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -80,9 +77,10 @@ class Gallery
                         </div>
                     </div>';
         // }
-        $output .= '<div id="#links-'. $id . '-' . $unique .'" class="gallery gallery-' . $id . '-' . $unique . '">';
+        $output .= '<div id="links" class="gallery">';
 
         $i = 0;
+
         foreach ($attachments as $id => $attachment) {
             switch ($link) {
                 case 'file':
@@ -92,12 +90,13 @@ class Gallery
                     $image = wp_get_attachment_image($id, $size, false, ['class' => 'thumbnail img-thumbnail']);
                     break;
                 default:
-                    $image = '<a href="' . wp_get_attachment_image_src($id, 'large')[0] . '" title="'.$attachment->post_title.'" data-gallery="#blueimp-gallery-' . $instance . '" data-description="'.$attachment->post_excerpt.'">';
+                    $image = '<a href="' . wp_get_attachment_image_src($id, 'large')[0] . '" title="'.$attachment->post_title.'" data-gallery data-description="'.$attachment->post_excerpt.'">';
                     $image .= wp_get_attachment_image($id, $size, false, ['class' => 'thumbnail img-thumbnail']);
                     $image .= '</a>';
                     break;
             }
-            $output .= ($i % $columns == 0) ? '<div class="row">': '';
+
+            $output .= ($i % $columns == 0) ? '<div class="row justify-content-center">': '';
             $output .= '<div class="' . $grid .' mb-4">' . $image;
 
             if (trim($attachment->post_excerpt)) {
@@ -111,6 +110,7 @@ class Gallery
 
         $output .= ($i % $columns != 0) ? '</div>' : '';
         $output .= '</div>';
+
         return $output;
     }
 }
