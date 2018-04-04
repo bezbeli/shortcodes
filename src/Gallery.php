@@ -11,9 +11,7 @@ class Gallery
         static $instance = 0;
         $instance++;
 
-        $post = get_post();
-
-        $id = $post->ID;
+        $id = get_the_id();
         $columns = $attr['columns'];
         $size = $attr['size'];
         $order = $attr['order'];
