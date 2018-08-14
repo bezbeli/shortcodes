@@ -11,7 +11,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Bezbeli\\Gallery\\": "src"
+            "Bezbeli\\": "src"
         }
     },
     "minimum-stability": "stable",
