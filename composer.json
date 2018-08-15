@@ -1,6 +1,6 @@
 {
-    "name": "bezbeli/test-shortcode",
-    "description": "Custom shortcode test",
+    "name": "bezbeli/bezbeli-shortcodes",
+    "description": "Bezbeli shortcodes",
     "type": "package",
     "license": "MIT",
     "authors": [
