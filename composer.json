@@ -1,6 +1,6 @@
 {
-    "name": "bezbeli/blueimp-gallery-shortcode",
-    "description": "Custom gallery shortcode for Roots/Sage",
+    "name": "bezbeli/test-shortcode",
+    "description": "Custom shortcode test",
     "type": "package",
     "license": "MIT",
     "authors": [
