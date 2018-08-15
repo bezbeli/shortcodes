@@ -10,10 +10,11 @@ class Shortcodes
     public function __construct()
     {
         remove_shortcode('gallery');
-        add_filter('use_default_gallery_style', '__return_null');
+        // add_filter('use_default_gallery_style', '__return_null');
 
-        add_shortcode('test', [$this, 'blueimpGallery']);
-        add_shortcode('say_something_else', [$this, 'saySomethingElseShortcode']);
+        add_shortcode('gallery', [$this, 'blueimpGallery']);
+        add_shortcode('test', [$this, 'saySomethingElseShortcode']);
+        add_shortcode('hello', [$this, 'sayHelloShortcode']);
     }
 
     public function sayHelloShortcode($attr)
@@ -23,7 +24,7 @@ class Shortcodes
 
     public function saySomethingElseShortcode($attr)
     {
-        return 'I am happy to saySomethingElseShortcode!';
+        return 'I am happy to say Something Else!';
     }
 
     public function blueimpGallery($attr)
@@ -177,7 +178,7 @@ class Shortcodes
         }
 
         $output .= (0 != $i % $columns) ? '</div>' : '';
-        $output .= '</div>';
+        $output .= '</div>'.$instance;
 
         return $output;
     }
