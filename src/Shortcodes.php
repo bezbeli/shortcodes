@@ -182,12 +182,14 @@ class Shortcodes
                 'order' => 'ASC',
                 'orderby' => 'menu_order',
                 'id' => get_the_id(),
-                'columns' => 4,
+                'columns' => 3,
                 'size' => 'medium',
                 ],
                 $attr
             )
         );
+
+        $col = 12 / $columns;
 
         $output = '';
 
@@ -207,7 +209,7 @@ class Shortcodes
                 $subpages->the_post();
                 $thumb_url = get_the_post_thumbnail_url(get_the_id(), $size);
 
-                $output .= '<div class="col-md-3 mb-4 d-flex align-items-stretch">';
+                $output .= '<div class="col-md-'.$col.' mb-4 d-flex align-items-stretch">';
                 $output .= '<div class="card w-100">';
                 $output .= '<a href="'.get_permalink().'">';
                 $output .= '<div class="ratio ratio-1x1">';
