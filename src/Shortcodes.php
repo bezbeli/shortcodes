@@ -2,6 +2,8 @@
 
 namespace Bezbeli;
 
+use wp_query;
+
 /**
  * Test shortcode class.
  */
@@ -13,18 +15,7 @@ class Shortcodes
         // add_filter('use_default_gallery_style', '__return_null');
 
         add_shortcode('gallery', [$this, 'blueimpGallery']);
-        add_shortcode('test', [$this, 'saySomethingElseShortcode']);
-        add_shortcode('hello', [$this, 'sayHelloShortcode']);
-    }
-
-    public function sayHelloShortcode($attr)
-    {
-        return 'I am happy to say hello!';
-    }
-
-    public function saySomethingElseShortcode($attr)
-    {
-        return 'I am happy to say Something Else!';
+        add_shortcode('subpages', [$this, 'subpages']);
     }
 
     public function blueimpGallery($attr)
@@ -179,6 +170,60 @@ class Shortcodes
 
         $output .= (0 != $i % $columns) ? '</div>' : '';
         $output .= '</div>'.$instance;
+
+        return $output;
+    }
+
+    public function subpages($attr)
+    {
+        extract(
+            shortcode_atts(
+                [
+                'order' => 'ASC',
+                'orderby' => 'menu_order',
+                'id' => get_the_id(),
+                'columns' => 4,
+                'size' => 'medium',
+                ],
+                $attr
+            )
+        );
+
+        $output = '';
+
+        $subpage_args = [
+        'post_type' => 'page',
+        'post_parent' => get_the_id(),
+        'orderby' => 'menu_order',
+        'order' => 'desc',
+        'posts_per_page' => 12,
+        ];
+
+        $subpages = new wp_query($subpage_args);
+
+        if ($subpages->have_posts()) :
+            $output .= '<div class="row justify-content-center">';
+            while ($subpages->have_posts()) :
+                $subpages->the_post();
+                $thumb_url = get_the_post_thumbnail_url(get_the_id(), $size);
+
+                $output .= '<div class="col-md-3 mb-4 d-flex align-items-stretch">';
+                $output .= '<div class="card w-100">';
+                $output .= '<a href="'.get_permalink().'">';
+                $output .= '<div class="ratio ratio-1x1">';
+                $output .= '<div class="image lazy" data-src="'.$thumb_url.'"></div>';
+                $output .= '</div>';
+                $output .= '</a>';
+                $output .= '<div class="card-body">';
+                $output .= '<a href="'.get_permalink().'">';
+                $output .= get_the_title();
+                $output .= '</a>';
+                $output .= '</div>';
+                $output .= '</div>';
+                $output .= '</div>';
+            endwhile;
+            $output .= '</div>';
+        endif;
 
         return $output;
     }
