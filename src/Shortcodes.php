@@ -16,6 +16,7 @@ class Shortcodes
 
         add_shortcode('gallery', [$this, 'blueimpGallery']);
         add_shortcode('subpages', [$this, 'subpages']);
+        add_shortcode('attachments', [$this, 'attachments']);
     }
 
     public function blueimpGallery($attr)
@@ -170,6 +171,136 @@ class Shortcodes
 
         $output .= (0 != $i % $columns) ? '</div>' : '';
         $output .= '</div>'.$instance;
+
+        return $output;
+    }
+
+    public function attachments($attr)
+    {
+        $post = get_post();
+
+        static $instance = 0;
+        ++$instance;
+
+        if (!empty($attr['ids'])) {
+            if (empty($attr['orderby'])) {
+                $attr['orderby'] = 'post__in';
+            }
+            $attr['include'] = $attr['ids'];
+        }
+
+        $output = apply_filters('post_gallery', '', $attr);
+
+        if ('' != $output) {
+            return $output;
+        }
+
+        if (isset($attr['orderby'])) {
+            $attr['orderby'] = sanitize_sql_orderby($attr['orderby']);
+            if (!$attr['orderby']) {
+                unset($attr['orderby']);
+            }
+        }
+
+        extract(
+            shortcode_atts(
+                [
+                'order' => 'ASC',
+                'orderby' => 'menu_order ID',
+                'id' => $post->ID,
+                'itemtag' => '',
+                'icontag' => '',
+                'captiontag' => '',
+                'columns' => '',
+                'size' => 'thumbnail',
+                'include' => '',
+                'exclude' => '',
+                'link' => 'none',
+                ],
+                $attr
+            )
+        );
+
+        $id = intval($id);
+        $grid = $columns ? sprintf('col-md-%1$s', 12 / $columns) : 'col';
+
+        if ('RAND' === $order) {
+            $orderby = 'none';
+        }
+
+        if (!empty($include)) {
+            $_attachments = get_posts(
+                [
+                'include' => $include,
+                'post_status' => 'inherit',
+                'post_type' => 'attachment',
+                'post_mime_type' => 'image',
+                'order' => $order,
+                'orderby' => $orderby,
+                ]
+            );
+
+            $attachments = [];
+            foreach ($_attachments as $key => $val) {
+                $attachments[$val->ID] = $_attachments[$key];
+            }
+        } elseif (!empty($exclude)) {
+            $attachments = get_children(
+                [
+                'post_parent' => $id,
+                'exclude' => $exclude,
+                'post_status' => 'inherit',
+                'post_type' => 'attachment',
+                'post_mime_type' => 'image',
+                'order' => $order,
+                'orderby' => $orderby,
+                ]
+            );
+        } else {
+            $attachments = get_children(
+                [
+                'post_parent' => $id,
+                'post_status' => 'inherit',
+                'post_type' => 'attachment',
+                'post_mime_type' => 'image',
+                'order' => $order,
+                'orderby' => $orderby,
+                ]
+            );
+        }
+
+        if (empty($attachments)) {
+            return '';
+        }
+
+        if (is_feed()) {
+            $output = "\n";
+            foreach ($attachments as $att_id => $attachment) {
+                $output .= wp_get_attachment_link($att_id, $size, true)."\n";
+            }
+
+            return $output;
+        }
+
+        $output = '';
+        $output .= '<div class="row justify-content-center align-items-start">';
+
+        foreach ($attachments as $id => $attachment) {
+            $imgUrl = wp_get_attachment_image_src($id, 'large')[0];
+            $title = $attachment->post_title;
+            $image = wp_get_attachment_image($id, $size, false, ['class' => 'img-fluid']);
+
+            $output .= '<div class="'.$grid.' mb-2">';
+            $output .= $image;
+            $output .= '<h5>'.$title.'</h5>';
+
+            if (trim($attachment->post_content)) {
+                $output .= '<small>'.wptexturize($attachment->post_content).'</small>';
+            }
+
+            $output .= '</div>';
+        }
+        $output .= '</div>';
 
         return $output;
     }
