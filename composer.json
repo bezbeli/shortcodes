@@ -1,6 +1,6 @@
 {
-    "name": "bezbeli/bezbeli-shortcodes",
-    "description": "Bezbeli shortcodes",
+    "name": "bezbeli/shortcodes",
+    "description": "Wordpress shortcodes",
     "type": "package",
     "license": "MIT",
     "authors": [
