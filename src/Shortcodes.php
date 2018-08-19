@@ -205,6 +205,7 @@ class Shortcodes
         extract(
             shortcode_atts(
                 [
+                'title' => '',
                 'order' => 'ASC',
                 'orderby' => 'menu_order ID',
                 'id' => $post->ID,
@@ -214,7 +215,7 @@ class Shortcodes
                 'columns' => '',
                 'size' => 'thumbnail',
                 'include' => '',
-                'exclude' => '',
+                'exclude' => get_post_thumbnail_id($post->ID),
                 'link' => 'none',
                 ],
                 $attr
@@ -283,6 +284,8 @@ class Shortcodes
         }
 
         $output = '';
+        $output .= '<h4 class="text-center mb-3">'.$title.'</h4>';
+
         $output .= '<div class="row justify-content-center align-items-start">';
 
         foreach ($attachments as $id => $attachment) {
@@ -290,9 +293,9 @@ class Shortcodes
             $title = $attachment->post_title;
             $image = wp_get_attachment_image($id, $size, false, ['class' => 'img-fluid']);
 
-            $output .= '<div class="'.$grid.' mb-2">';
+            $output .= '<div class="'.$grid.' mb-4">';
             $output .= $image;
-            $output .= '<h5>'.$title.'</h5>';
+            $output .= '<h6 class="mt-2">'.$title.'</h6>';
 
             if (trim($attachment->post_content)) {
                 $output .= '<small>'.wptexturize($attachment->post_content).'</small>';
