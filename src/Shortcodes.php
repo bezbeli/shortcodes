@@ -60,6 +60,7 @@ class Shortcodes
                 'include'    => '',
                 'exclude'    => '',
                 'link'       => '',
+                'blueimp'    => true,
                 ],
                 $attr
             )
@@ -129,17 +130,19 @@ class Shortcodes
 
         $unique = (get_query_var('page')) ? $instance.'-p'.get_query_var('page') : $instance;
         $output = '';
-        $output .= '
-    <div id="blueimp-gallery" class="blueimp-gallery">
-        <div class="slides"></div>
-        <h3 class="title"></h3>
-        <a class="prev">‹</a>
-        <a class="next">›</a>
-        <a class="close">×</a>
-        <a class="play-pause"></a>
-        <ol class="indicator"></ol>
-    </div>
-    ';
+        if ($blueimp) {
+            $output .= '
+            <div id="blueimp-gallery" class="blueimp-gallery">
+                <div class="slides"></div>
+                <h3 class="title"></h3>
+                <a class="prev">‹</a>
+                <a class="next">›</a>
+                <a class="close">×</a>
+                <a class="play-pause"></a>
+                <ol class="indicator"></ol>
+            </div>
+            ';
+        }
 
         $output .= '<div id="links">';
 
