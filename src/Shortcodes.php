@@ -49,17 +49,17 @@ class Shortcodes
         extract(
             shortcode_atts(
                 [
-                'order' => 'ASC',
-                'orderby' => 'menu_order ID',
-                'id' => $post->ID,
-                'itemtag' => '',
-                'icontag' => '',
+                'order'      => 'ASC',
+                'orderby'    => 'menu_order ID',
+                'id'         => $post->ID,
+                'itemtag'    => '',
+                'icontag'    => '',
                 'captiontag' => '',
-                'columns' => 4,
-                'size' => 'thumbnail',
-                'include' => '',
-                'exclude' => '',
-                'link' => '',
+                'columns'    => 4,
+                'size'       => 'thumbnail',
+                'include'    => '',
+                'exclude'    => '',
+                'link'       => '',
                 ],
                 $attr
             )
@@ -76,12 +76,12 @@ class Shortcodes
         if (!empty($include)) {
             $_attachments = get_posts(
                 [
-                'include' => $include,
-                'post_status' => 'inherit',
-                'post_type' => 'attachment',
+                'include'        => $include,
+                'post_status'    => 'inherit',
+                'post_type'      => 'attachment',
                 'post_mime_type' => 'image',
-                'order' => $order,
-                'orderby' => $orderby,
+                'order'          => $order,
+                'orderby'        => $orderby,
                 ]
             );
 
@@ -92,24 +92,24 @@ class Shortcodes
         } elseif (!empty($exclude)) {
             $attachments = get_children(
                 [
-                'post_parent' => $id,
-                'exclude' => $exclude,
-                'post_status' => 'inherit',
-                'post_type' => 'attachment',
+                'post_parent'    => $id,
+                'exclude'        => $exclude,
+                'post_status'    => 'inherit',
+                'post_type'      => 'attachment',
                 'post_mime_type' => 'image',
-                'order' => $order,
-                'orderby' => $orderby,
+                'order'          => $order,
+                'orderby'        => $orderby,
                 ]
             );
         } else {
             $attachments = get_children(
                 [
-                'post_parent' => $id,
-                'post_status' => 'inherit',
-                'post_type' => 'attachment',
+                'post_parent'    => $id,
+                'post_status'    => 'inherit',
+                'post_type'      => 'attachment',
                 'post_mime_type' => 'image',
-                'order' => $order,
-                'orderby' => $orderby,
+                'order'          => $order,
+                'orderby'        => $orderby,
                 ]
             );
         }
@@ -170,7 +170,7 @@ class Shortcodes
         }
 
         $output .= (0 != $i % $columns) ? '</div>' : '';
-        $output .= '</div>'.$instance;
+        $output .= '</div>';
 
         return $output;
     }
@@ -205,18 +205,18 @@ class Shortcodes
         extract(
             shortcode_atts(
                 [
-                'title' => '',
-                'order' => 'ASC',
-                'orderby' => 'menu_order ID',
-                'id' => $post->ID,
-                'itemtag' => '',
-                'icontag' => '',
+                'title'      => '',
+                'order'      => 'ASC',
+                'orderby'    => 'menu_order ID',
+                'id'         => $post->ID,
+                'itemtag'    => '',
+                'icontag'    => '',
                 'captiontag' => '',
-                'columns' => '',
-                'size' => 'thumbnail',
-                'include' => '',
-                'exclude' => get_post_thumbnail_id($post->ID),
-                'link' => 'none',
+                'columns'    => '',
+                'size'       => 'thumbnail',
+                'include'    => '',
+                'exclude'    => get_post_thumbnail_id($post->ID),
+                'link'       => 'none',
                 ],
                 $attr
             )
@@ -232,12 +232,12 @@ class Shortcodes
         if (!empty($include)) {
             $_attachments = get_posts(
                 [
-                'include' => $include,
-                'post_status' => 'inherit',
-                'post_type' => 'attachment',
+                'include'        => $include,
+                'post_status'    => 'inherit',
+                'post_type'      => 'attachment',
                 'post_mime_type' => 'image',
-                'order' => $order,
-                'orderby' => $orderby,
+                'order'          => $order,
+                'orderby'        => $orderby,
                 ]
             );
 
@@ -248,24 +248,24 @@ class Shortcodes
         } elseif (!empty($exclude)) {
             $attachments = get_children(
                 [
-                'post_parent' => $id,
-                'exclude' => $exclude,
-                'post_status' => 'inherit',
-                'post_type' => 'attachment',
+                'post_parent'    => $id,
+                'exclude'        => $exclude,
+                'post_status'    => 'inherit',
+                'post_type'      => 'attachment',
                 'post_mime_type' => 'image',
-                'order' => $order,
-                'orderby' => $orderby,
+                'order'          => $order,
+                'orderby'        => $orderby,
                 ]
             );
         } else {
             $attachments = get_children(
                 [
-                'post_parent' => $id,
-                'post_status' => 'inherit',
-                'post_type' => 'attachment',
+                'post_parent'    => $id,
+                'post_status'    => 'inherit',
+                'post_type'      => 'attachment',
                 'post_mime_type' => 'image',
-                'order' => $order,
-                'orderby' => $orderby,
+                'order'          => $order,
+                'orderby'        => $orderby,
                 ]
             );
         }
@@ -313,11 +313,11 @@ class Shortcodes
         extract(
             shortcode_atts(
                 [
-                'order' => 'ASC',
+                'order'   => 'ASC',
                 'orderby' => 'menu_order',
-                'id' => get_the_id(),
+                'id'      => get_the_id(),
                 'columns' => 3,
-                'size' => 'medium',
+                'size'    => 'medium',
                 ],
                 $attr
             )
@@ -328,10 +328,10 @@ class Shortcodes
         $output = '';
 
         $subpage_args = [
-        'post_type' => 'page',
-        'post_parent' => get_the_id(),
-        'orderby' => 'menu_order',
-        'order' => 'desc',
+        'post_type'      => 'page',
+        'post_parent'    => get_the_id(),
+        'orderby'        => 'menu_order',
+        'order'          => 'desc',
         'posts_per_page' => 12,
         ];
 
