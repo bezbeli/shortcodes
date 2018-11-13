@@ -168,7 +168,7 @@ class Shortcodes
             $output .= (0 == $i % $columns) ? '<div class="row d-flex justify-content-center align-items-center gallery-row mb-3">' : '';
             $output .= '<div class="'.$grid.'">'.$image;
 
-            if (trim($attachment->post_excerpt)) {
+            if ($link != 'external' && trim($attachment->post_excerpt)) {
                 $output .= '<div class="caption hidden">'.wptexturize($attachment->post_excerpt).'</div>';
             }
 
@@ -347,26 +347,26 @@ class Shortcodes
 
         if ($subpages->have_posts()) :
             $output .= '<div class="row justify-content-center">';
-        while ($subpages->have_posts()) :
+            while ($subpages->have_posts()) :
                 $subpages->the_post();
-        $thumb_url = get_the_post_thumbnail_url(get_the_id(), $size);
+                $thumb_url = get_the_post_thumbnail_url(get_the_id(), $size);
 
-        $output .= '<div class="col-md-'.$col.' mb-4 d-flex align-items-stretch">';
-        $output .= '<div class="card w-100">';
-        $output .= '<a href="'.get_permalink().'">';
-        $output .= '<div class="ratio ratio-1x1">';
-        $output .= '<div class="image lazy" data-src="'.$thumb_url.'"></div>';
-        $output .= '</div>';
-        $output .= '</a>';
-        $output .= '<div class="card-body">';
-        $output .= '<a href="'.get_permalink().'">';
-        $output .= get_the_title();
-        $output .= '</a>';
-        $output .= '</div>';
-        $output .= '</div>';
-        $output .= '</div>';
-        endwhile;
-        $output .= '</div>';
+                $output .= '<div class="col-md-'.$col.' mb-4 d-flex align-items-stretch">';
+                $output .= '<div class="card w-100">';
+                $output .= '<a href="'.get_permalink().'">';
+                $output .= '<div class="ratio ratio-1x1">';
+                $output .= '<div class="image lazy" data-src="'.$thumb_url.'"></div>';
+                $output .= '</div>';
+                $output .= '</a>';
+                $output .= '<div class="card-body">';
+                $output .= '<a href="'.get_permalink().'">';
+                $output .= get_the_title();
+                $output .= '</a>';
+                $output .= '</div>';
+                $output .= '</div>';
+                $output .= '</div>';
+            endwhile;
+            $output .= '</div>';
         endif;
 
         return $output;
