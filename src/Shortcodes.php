@@ -14,12 +14,12 @@ class Shortcodes
         remove_shortcode('gallery');
         // add_filter('use_default_gallery_style', '__return_null');
 
-        add_shortcode('gallery', [$this, 'blueimpGallery']);
+        add_shortcode('gallery', [$this, 'gallery']);
         add_shortcode('subpages', [$this, 'subpages']);
         add_shortcode('attachments', [$this, 'attachments']);
     }
 
-    public function blueimpGallery($attr)
+    public function gallery($attr)
     {
         $post = get_post();
 
@@ -150,6 +150,9 @@ class Shortcodes
         foreach ($attachments as $id => $attachment) {
             $imgUrl = wp_get_attachment_image_src($id, 'large')[0];
             $title = $attachment->post_title;
+            if (!$blueimp) {
+                $link = 'none';
+            }
             switch ($link) {
                 case 'none':
                     $image = wp_get_attachment_image($id, $size, false, ['class' => 'thumbnail img-fluid']);
@@ -160,7 +163,7 @@ class Shortcodes
                     $image .= '</a>';
                     break;
             }
-            $output .= (0 == $i % $columns) ? '<div class="row gallery-row">' : '';
+            $output .= (0 == $i % $columns) ? '<div class="row d-flex justify-content-center align-items-center gallery-row mb-3">' : '';
             $output .= '<div class="'.$grid.'">'.$image;
 
             if (trim($attachment->post_excerpt)) {
@@ -226,7 +229,7 @@ class Shortcodes
         );
 
         $id = intval($id);
-        $grid = $columns ? sprintf('col-md-%1$s', 12 / $columns) : 'col';
+        $grid = $columns ? sprintf('col-%1$s', 12 / $columns) : 'col';
 
         if ('RAND' === $order) {
             $orderby = 'none';
