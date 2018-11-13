@@ -150,16 +150,18 @@ class Shortcodes
         foreach ($attachments as $id => $attachment) {
             $imgUrl = wp_get_attachment_image_src($id, 'large')[0];
             $title = $attachment->post_title;
-            if (!$blueimp) {
-                $link = 'none';
-            }
             switch ($link) {
                 case 'none':
-                    $image = wp_get_attachment_image($id, $size, false, ['class' => 'thumbnail img-fluid']);
+                    $image = wp_get_attachment_image($id, $size, false, ['class' => 'img-fluid']);
+                    break;
+                case 'external':
+                    $image = '<a target="_blank" href="'.$attachment->post_excerpt.'" title="'.$title.'">';
+                    $image .= wp_get_attachment_image($id, $size, false, ['class' => 'img-fluid']);
+                    $image .= '</a>';
                     break;
                 default:
                     $image = '<a data-gallery="" href="'.$imgUrl.'" title="'.$title.'" data-description="'.$attachment->post_excerpt.'">';
-                    $image .= wp_get_attachment_image($id, $size, false, ['class' => 'thumbnail img-fluid']);
+                    $image .= wp_get_attachment_image($id, $size, false, ['class' => 'img-fluid']);
                     $image .= '</a>';
                     break;
             }
@@ -345,26 +347,26 @@ class Shortcodes
 
         if ($subpages->have_posts()) :
             $output .= '<div class="row justify-content-center">';
-            while ($subpages->have_posts()) :
+        while ($subpages->have_posts()) :
                 $subpages->the_post();
-                $thumb_url = get_the_post_thumbnail_url(get_the_id(), $size);
+        $thumb_url = get_the_post_thumbnail_url(get_the_id(), $size);
 
-                $output .= '<div class="col-md-'.$col.' mb-4 d-flex align-items-stretch">';
-                $output .= '<div class="card w-100">';
-                $output .= '<a href="'.get_permalink().'">';
-                $output .= '<div class="ratio ratio-1x1">';
-                $output .= '<div class="image lazy" data-src="'.$thumb_url.'"></div>';
-                $output .= '</div>';
-                $output .= '</a>';
-                $output .= '<div class="card-body">';
-                $output .= '<a href="'.get_permalink().'">';
-                $output .= get_the_title();
-                $output .= '</a>';
-                $output .= '</div>';
-                $output .= '</div>';
-                $output .= '</div>';
-            endwhile;
-            $output .= '</div>';
+        $output .= '<div class="col-md-'.$col.' mb-4 d-flex align-items-stretch">';
+        $output .= '<div class="card w-100">';
+        $output .= '<a href="'.get_permalink().'">';
+        $output .= '<div class="ratio ratio-1x1">';
+        $output .= '<div class="image lazy" data-src="'.$thumb_url.'"></div>';
+        $output .= '</div>';
+        $output .= '</a>';
+        $output .= '<div class="card-body">';
+        $output .= '<a href="'.get_permalink().'">';
+        $output .= get_the_title();
+        $output .= '</a>';
+        $output .= '</div>';
+        $output .= '</div>';
+        $output .= '</div>';
+        endwhile;
+        $output .= '</div>';
         endif;
 
         return $output;
