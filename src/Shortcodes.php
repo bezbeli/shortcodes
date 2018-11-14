@@ -306,7 +306,7 @@ class Shortcodes
             $output .= '<h6 class="mt-2">'.$title.'</h6>';
 
             if (trim($attachment->post_content)) {
-                $output .= '<small>'.wptexturize($attachment->post_content).'</small>';
+                $output .= '<p class="small">'.wptexturize($attachment->post_content).'</p>';
             }
 
             $output .= '</div>';
