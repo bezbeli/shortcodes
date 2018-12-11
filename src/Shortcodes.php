@@ -31,7 +31,7 @@ class Shortcodes
 
     public function googleMap()
     {
-        return '<div class="row mb-5"><div class="col"><div class="ratio ratio-2x1 border">Google map</div></div></div>';
+        return '<div class="row mb-5"><div class="col"><div class="ratio ratio-2x1 border-themed">Google map</div></div></div>';
     }
 
     public function booking()
@@ -386,50 +386,47 @@ class Shortcodes
         $output = '';
 
         $subpage_args = [
-            'post_type'      => 'page',
-            'post_parent'    => get_the_id(),
-            'orderby'        => 'menu_order',
-            'order'          => 'desc',
-            'posts_per_page' => 12,
+            'post_type'   => 'page',
+            'post_parent' => get_the_id(),
+            'orderby'     => 'menu_order',
+            'order'       => 'desc',
         ];
 
         $subpages = new wp_query($subpage_args);
 
-        if ($subpages->have_posts()) :
+        if ($subpages->have_posts()) {
             $output .= '<div class="row justify-content-start">';
-        while ($subpages->have_posts()) :
+            while ($subpages->have_posts()) {
                 $subpages->the_post();
-        $thumb_url = get_the_post_thumbnail_url(get_the_id(), $size);
+                $thumb_url = get_the_post_thumbnail_url(get_the_id(), $size);
 
-        // $output .= '<div class="col-md-'.$col.' mb-4 d-flex align-items-stretch">';
-        // $output .= '<div class="card w-100">';
-        // $output .= '<a href="'.get_permalink().'">';
-        // $output .= '<div class="ratio ratio-1x1">';
-        // $output .= '<div class="image lazy" data-src="'.$thumb_url.'"></div>';
-        // $output .= '</div>';
-        // $output .= '</a>';
-        // $output .= '<div class="card-body">';
-        // $output .= '<a href="'.get_permalink().'">';
-        // $output .= get_the_title();
-        // $output .= '</a>';
-        // $output .= '</div>';
-        // $output .= '</div>';
-        // $output .= '</div>';
+                // $output .= '<div class="col-md-'.$col.' mb-4 d-flex align-items-stretch">';
+                // $output .= '<div class="card w-100">';
+                // $output .= '<a href="'.get_permalink().'">';
+                // $output .= '<div class="ratio ratio-1x1">';
+                // $output .= '<div class="image lazy" data-src="'.$thumb_url.'"></div>';
+                // $output .= '</div>';
+                // $output .= '</a>';
+                // $output .= '<div class="card-body">';
+                // $output .= '<a href="'.get_permalink().'">';
+                // $output .= get_the_title();
+                // $output .= '</a>';
+                // $output .= '</div>';
+                // $output .= '</div>';
+                // $output .= '</div>';
 
-        $output .= '<div class="d-flex col-6 col-md-' . $col . ' align-items-stretch px-2 mb-4">';
-        $output .= '<div class="blog-item w-100 border">';
-        $output .= '<a class="ratio ratio-1x1 photo mb-2" href="' . get_permalink() . '" style="background-image:url(' . $thumb_url . '"></a>';
-        $output .= '<a href="' . get_permalink() . '">';
-        $output .= '<h5 class="p-3">' . get_the_title() . '</h5>';
-        $output .= '</a>';
-        $output .= '</div>';
-        $output .= '</div>';
+                $output .= '<div class="d-flex col-6 col-md-' . $col . ' align-items-stretch mb-4">';
+                $output .= '<div class="blog-item w-100 border-themed">';
+                $output .= '<a class="ratio ratio-1x1 photo mb-2" href="' . get_permalink() . '" style="background-image:url(' . $thumb_url . '"></a>';
+                $output .= '<a href="' . get_permalink() . '">';
+                $output .= '<h6 class="px-2 px-md-3 py-1">' . get_the_title() . '</h6>';
+                $output .= '</a>';
+                $output .= '</div>';
+                $output .= '</div>';
+            };
 
-
-        endwhile;
-
-        $output .= '</div>';
-        endif;
+            $output .= '</div>';
+        };
 
         return $output;
     }
