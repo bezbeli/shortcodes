@@ -3,6 +3,7 @@
 namespace Bezbeli;
 
 use wp_query;
+use TemplateEvents;
 
 /**
  * Test shortcode class.
@@ -24,19 +25,73 @@ class Shortcodes
         add_shortcode('attachments', [$this, 'attachments']);
     }
 
-    public function events()
+    public function events($args)
     {
-        return '<div class="row mb-5"><div class="col"><h2>What\'s happening next</h2></div></div>';
+    
+        // Start object caching or output
+        ob_start();
+        
+
+        $args = shortcode_atts(
+            [
+                'title'   => 'Upcomming events',
+                'limit'   => '3',
+                'columns' => '3',
+            ],
+            $args
+        );
+
+        // Get events query
+        $events = new TemplateEvents();
+        $events = $events->events($args['limit']);
+
+        $grid_class = 'col-sm-6 ' . 'col-md-' . 12 / $args['columns'];
+
+        // Set the template we're going to use for the Shortcode
+        $template = 'partials/grid-card-events';
+
+        // Set up template data
+        $data = collect(get_body_class())->reduce(function ($data, $class) use ($template) {
+            return apply_filters("sage/template/{$class}/data", $data, $template);
+        }, []);
+
+        // Get the pass additional data to blade template
+        $data['card_title'] = $args['title'];
+        $data['the_query'] = $events;
+        $data['grid_class'] = $grid_class;
+
+        // Echo the shortcode blade template
+        echo \App\Template($template, $data);
+
+        // Return cached object
+        return ob_get_clean();
+
+        return $output;
     }
 
     public function googleMap()
     {
-        return '<div class="row mb-5"><div class="col"><div class="ratio ratio-2x1 border-themed">Google map</div></div></div>';
+        return '';
     }
 
     public function booking()
     {
-        return '<div class="row mb-5"><div class="col">Booking</div></div>';
+        // Start object caching or output
+        ob_start();
+
+        // Set the template we're going to use for the Shortcode
+        $template = 'partials/booking-form';
+
+        // Set up template data
+        $data = collect(get_body_class())->reduce(function ($data, $class) use ($template) {
+            return apply_filters("sage/template/{$class}/data", $data, $template);
+        }, []);
+
+        // Echo the shortcode blade template
+        echo \App\Template($template, $data);
+
+        // Return cached object
+        return ob_get_clean();
     }
 
     public function soundcloud()
@@ -389,7 +444,7 @@ class Shortcodes
             'post_type'   => 'page',
             'post_parent' => get_the_id(),
             'orderby'     => 'menu_order',
-            'order'       => 'desc',
+            'order'       => 'asc',
         ];
 
         $subpages = new wp_query($subpage_args);
@@ -424,6 +479,8 @@ class Shortcodes
                 $output .= '</div>';
                 $output .= '</div>';
             };
+            
+            wp_reset_query();
 
             $output .= '</div>';
         };
