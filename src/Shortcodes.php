@@ -23,6 +23,12 @@ class Shortcodes
         add_shortcode('soundcloud', [$this, 'soundcloud']);
         add_shortcode('events', [$this, 'events']);
         add_shortcode('attachments', [$this, 'attachments']);
+        add_shortcode('mailchimp', [$this, 'mailchimp']);
+    }
+
+    public function mailchimp()
+    {
+        return '';
     }
 
     public function events($args)
@@ -30,11 +36,10 @@ class Shortcodes
     
         // Start object caching or output
         ob_start();
-        
 
         $args = shortcode_atts(
             [
-                'title'   => 'Upcomming events',
+                'title'   => 'Upcoming events',
                 'limit'   => '3',
                 'columns' => '3',
             ],
@@ -96,7 +101,7 @@ class Shortcodes
 
     public function soundcloud()
     {
-        return '<div class="row mb-5"><div class="col">Soundcloud</div></div>';
+        return '';
     }
 
     public function sections($attr)
@@ -426,11 +431,12 @@ class Shortcodes
         extract(
             shortcode_atts(
                 [
-                    'order'   => 'ASC',
-                    'orderby' => 'menu_order',
-                    'id'      => get_the_id(),
-                    'columns' => 4,
-                    'size'    => 'medium',
+                    'order'      => 'ASC',
+                    'orderby'    => 'menu_order',
+                    'id'         => get_the_id(),
+                    'columns'    => 4,
+                    'thumbstyle' => 'default',
+                    'size'       => 'medium',
                 ],
                 $attr
             )
@@ -472,7 +478,7 @@ class Shortcodes
 
                 $output .= '<div class="d-flex col-6 col-md-' . $col . ' align-items-stretch mb-4">';
                 $output .= '<div class="blog-item w-100 border-themed">';
-                $output .= '<a class="ratio ratio-1x1 photo mb-2" href="' . get_permalink() . '" style="background-image:url(' . $thumb_url . '"></a>';
+                $output .= '<a class="ratio ratio-1x1 photo ' . $thumbstyle . ' mb-2" href="' . get_permalink() . '" style="background-image:url(' . $thumb_url . '"></a>';
                 $output .= '<a href="' . get_permalink() . '">';
                 $output .= '<h6 class="px-2 px-md-3 py-1">' . get_the_title() . '</h6>';
                 $output .= '</a>';
